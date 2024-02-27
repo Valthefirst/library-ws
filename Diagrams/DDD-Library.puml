@@ -1,0 +1,147 @@
+@startuml
+hide circle
+top to bottom direction
+!define ENTITY(entityName) class entityName << Entity >>
+!define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
+!define AGGREGATE_ROOT_ENTITY(aggregateRootEntityName) class aggregateRootEntityName << Aggregate Root >> << Entity >>
+!define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
+!pragma useVerticalIf on
+skinparam dpi 350
+skinparam packageStyle rectangle
+skinparam rectangle {
+    BackgroundColor #f7f4eb
+    BorderColor Black
+}
+rectangle "Library" as BoundedContextLibrary #line.dashed {
+    Package "Patrons Accounts Sub-Domain" <<Rectangle>> #DFBDF4 {
+
+        ENTITY(Patron) #lightblue{
+            firstName: String
+            lastName: String
+            contactMethodPreference: Enum
+        }
+
+        VALUE_OBJECT(PatronIdentifier) #Bisque{
+            patronId: UUID
+        }
+
+        VALUE_OBJECT(PatronAddress) #Bisque{
+            streetAddress: String
+            city: String
+            province: String
+            country: String
+            postalCode: String
+        }
+
+        VALUE_OBJECT(PatronPhoneNumber) #Bisque {
+            type: String
+            number: String
+        }
+
+        VALUE_OBJECT(Loans) #Bisque {
+            loans: list[LoanIdentifier]
+        }
+
+        Patron --> PatronIdentifier
+        Patron o--> "0..*" PatronPhoneNumber
+        Patron o--> "1" PatronAddress
+        Patron o--> "1..*" Loans
+    }
+
+    Package "Catalog Sub-Domain" <<Rectangle>> #DFBDF4 {
+        AGGREGATE_ROOT(Catalogue) #Cyan {
+            type: String
+        }
+
+       VALUE_OBJECT(CatalogueIdentifier) #Bisque{
+            catalogueId: UUID
+       }
+        ENTITY(Book) #lightblue{
+            title: String
+            collection: String
+            edition: String
+            publisher: String
+            synopsis: String
+            status: Enum
+            }
+
+        VALUE_OBJECT(ISBN) #Bisque{
+            isbn: Integer
+        }
+
+        VALUE_OBJECT(Author) #Bisque{
+            firstName: String
+            lastName: String
+        }
+
+        Book --> ISBN
+        Book o--> "1..*" Author
+        Catalogue --> CatalogueIdentifier
+        Catalogue *-- "0..*" ISBN
+        note on link
+        where book.status != BORROWED
+        end note
+    }
+
+    Package "Fines Sub-Domain" <<Rectangle>> #DFBDF4 {
+        ENTITY(Fine) #lightblue {
+            amount: Double
+            status: Enum
+            }
+
+        VALUE_OBJECT(FineIdentifier) #Bisque{
+            fineId: UUID
+        }
+
+        Fine --> FineIdentifier
+        Fine --> PatronIdentifier
+    }
+
+    Package "Loans Sub-Domain" <<Rectangle>> #DFBDF4 {
+        AGGREGATE_ROOT_ENTITY(Loan) #Cyan {
+            status: Enum
+            borrowedDate: LocalDateTime
+            dueDate: LocalDateTime
+            books: List[BookIdentifier]
+            }
+
+        VALUE_OBJECT(LoanIdentifier) #Bisque{
+            loanIdentifier: UUID
+        }
+
+        Loan --> LoanIdentifier
+        Loan --> PatronIdentifier
+        Loan --> ISBN
+        Loan --> FineIdentifier
+    }
+
+'    Package "Branches Sub-Domain" <<Rectangle>> #DFBDF4 {
+'        AGGREGATE_ROOT(Branch) #Cyan {
+'            name: String
+'            }
+'
+'        VALUE_OBJECT(BranchIdentifier) #Bisque{
+'            branchId: UUID
+'        }
+'
+'        VALUE_OBJECT(BranchAddress) #Bisque{
+'            streetAddress: String
+'            city: String
+'            province: String
+'            country: String
+'            postalCode: String
+'        }
+'
+'        Branch --> BranchIdentifier
+'        Branch --> BranchAddress
+'
+'    }
+
+
+
+
+
+}
+
+
+@enduml

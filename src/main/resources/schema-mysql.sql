@@ -19,3 +19,22 @@ create table if not exists patrons (
     country VARCHAR (50),
     postal_code VARCHAR (9)
     );
+
+create table if not exists books (
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    isbn VARCHAR(36),
+    catalogue_id VARCHAR(36),
+    title VARCHAR(255),
+    collection VARCHAR(255),
+    edition VARCHAR(255),
+    publisher VARCHAR(255),
+    synopsis VARCHAR(500),
+    first_name VARCHAR(36),
+    last_name VARCHAR(36)
+    );
+
+create table if not exists catalogues (
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    catalogue_id VARCHAR(36),
+    type VARCHAR(100)
+    );
