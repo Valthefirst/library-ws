@@ -49,3 +49,19 @@ create table if not exists fines (
     reason VARCHAR(50),
     is_paid VARCHAR(36)
     );
+
+create table if not exists loan_books (
+    loan_id INTEGER,
+    isbn BIGINT
+    );
+
+create table if not exists loans (
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    loan_id VARCHAR(36),
+    patron_id VARCHAR(36),
+    fine_id VARCHAR(36),
+    status VARCHAR(15),
+    borrowed_date DATE,
+    due_date DATE,
+    returned_date DATE
+    );

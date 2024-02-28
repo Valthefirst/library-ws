@@ -86,3 +86,47 @@ INSERT INTO catalogs (catalog_id, type, size) VALUES
                                                   ('04668502-0fec-4972-a401-e096354df26a', 'Young Adult', 0),
                                                   ('5efb2d57-180f-4ab0-b030-fdbd2c26b883', 'Biography', 0),
                                                   ('e125b033-591e-464d-91de-beaf360c3d48', 'Self-Help', 0);
+
+INSERT INTO fines (fine_id, amount, reason, is_paid) VALUES
+                                                         ('ef23ab6e-d614-47b9-95d0-d66167ae5081', 0.50, 'Late return', 'true'),
+                                                         ('549ac9a5-076c-4954-b735-38426ba365c0', 5.75, 'Late return', 'false'),
+                                                         ('5a059803-2f79-4e15-84bd-cfbffc048053', 1.25, 'Late return', 'true'),
+                                                         ('413d4695-787c-479d-9fb6-b316e94345c0', 0.75, 'Late return', 'false'),
+                                                         ('ab8d01f4-8a7c-4c06-9fd1-60ae848c9bff', 2.50, 'Late return', 'false'),
+                                                         ('5b4d6c59-ce18-467e-a5c7-df5bca05fd94', 2.50, 'Late return', 'false'),
+                                                         ('9cedbd09-2ae5-44cc-aaef-11974e2f78e7', 2.50, 'Late return', 'false'),
+                                                         ('02fa3edc-1616-48f4-a1d7-1f203e7e7415', 2.50, 'Late return', 'false'),
+                                                         ('b8887143-c9cf-4e63-960a-eb34de15fc9d', 2.50, 'Late return', 'false'),
+                                                         ('07dfa96a-3c6c-4225-b601-b18d206fc24d', 2.50, 'Late return', 'false');
+
+INSERT INTO loan_books (loan_id, isbn) VALUES (1, 9781566199094);
+INSERT INTO loan_books (loan_id, isbn) VALUES (2, 9780132350884);
+INSERT INTO loan_books (loan_id, isbn) VALUES (3, 9780201633610);
+INSERT INTO loan_books (loan_id, isbn) VALUES (4, 9780321125217);
+INSERT INTO loan_books (loan_id, isbn) VALUES (5, 9780545162074);
+INSERT INTO loan_books (loan_id, isbn) VALUES (6, 9780545791328);
+INSERT INTO loan_books (loan_id, isbn) VALUES (7, 9780439358071);
+INSERT INTO loan_books (loan_id, isbn) VALUES (8, 9780765311788);
+INSERT INTO loan_books (loan_id, isbn) VALUES (9, 9780312867819);
+INSERT INTO loan_books (loan_id, isbn) VALUES (10, 9780765308481);
+
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('1f8f92c6-49f0-4be7-81cc-464b92de11eb', 'e5913a79-9b1e-4516-9ffd-06578e7af261', 'ef23ab6e-d614-47b9-95d0-d66167ae5081', 'EXPIRED', '2024-02-01', '2024-02-15', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('d014011c-827c-44f5-bb9c-e75282dd9464', 'e5913a79-9b1e-4516-9ffd-06578e7af261', null, 'ACTIVE', '2024-02-10', '2024-03-01', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('c1865f4b-8bbe-4582-b0e4-0595ad28e19b', 'e5913a79-9b1e-4516-9ffd-06578e7af261', null, 'RETURNED', '2024-01-20', '2024-02-10', '2024-02-10');
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('49ed1f0b-747c-43d2-b487-2c45ee746b68', 'c3540a89-cb47-4c96-888e-ff96708db4d8', '549ac9a5-076c-4954-b735-38426ba365c0', 'EXPIRED', '2024-02-05', '2024-02-20', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('38b06365-6c97-4990-b063-ccfad1516b65', 'c3540a89-cb47-4c96-888e-ff96708db4d8', null, 'ACTIVE', '2024-02-15', '2024-03-05', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('3d9552f7-0305-414c-8708-a96697f61b10', 'c3540a89-cb47-4c96-888e-ff96708db4d8', null, 'RETURNED', '2024-02-08', '2024-02-28', '2024-02-20');
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('1ffd3d41-f669-4753-bfa0-c75522704b99', 'dd1ab8b0-ab17-4e03-b70a-84caa3871606', '5a059803-2f79-4e15-84bd-cfbffc048053', 'EXPIRED', '2024-02-20', '2024-03-05', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('e2859902-5e91-45d8-b2e7-93fc7abcae67', 'dd1ab8b0-ab17-4e03-b70a-84caa3871606', null, 'ACTIVE', '2024-02-25', '2024-03-15', null);
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('48dd2bd5-1546-48dd-9947-4eef6a4d0e19', 'dd1ab8b0-ab17-4e03-b70a-84caa3871606', null, 'RETURNED', '2024-02-12', '2024-03-02', '2024-02-29');
+INSERT INTO loans (loan_id, patron_id, fine_id, status, borrowed_date, due_date, returned_date)
+VALUES ('d7ffdd25-2ca6-40a6-9e71-18d009d3eb3a', 'ba6c3e76-366e-44bb-8279-b41dc32dc456', '413d4695-787c-479d-9fb6-b316e94345c0', 'EXPIRED', '2024-02-02', '2024-02-17', null);

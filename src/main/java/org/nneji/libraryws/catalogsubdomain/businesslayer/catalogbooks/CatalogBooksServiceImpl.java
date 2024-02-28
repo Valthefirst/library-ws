@@ -86,6 +86,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         catalogRepository.delete(existingCatalog);
     }
 
+
     // Methods for the books
     @Override
     public List<BookResponseModel> getAllBooksInCatalog(String catalogId) {

@@ -33,7 +33,8 @@ public class Patron {
     @CollectionTable(name = "patron_phonenumbers", joinColumns = @JoinColumn(name="patron_id"))
     private List<PhoneNumber> phoneNumbers;
 
-    public Patron(@NotNull String firstName, @NotNull String lastName, @NotNull String emailAddress, @NotNull ContactMethodPreference contactMethodPreference, @NotNull Address address,
+    public Patron(@NotNull String firstName, @NotNull String lastName, @NotNull String emailAddress,
+                  @NotNull ContactMethodPreference contactMethodPreference, @NotNull Address address,
                   @NotNull List<PhoneNumber> phoneNumbers) {
         this.patronIdentifier = new PatronIdentifier();
         this.firstName = firstName;

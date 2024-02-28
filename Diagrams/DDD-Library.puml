@@ -105,8 +105,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
     Package "Loans Sub-Domain" <<Rectangle>> #DFBDF4 {
 
-       note "Invariant: [When a book is borrowed i.e. book.status is set to BORROWED]" as catalogueInvariant1
-
+       note "Invariant: [When a book is added to the catalog i.e. catalog.size is set to increased by 1]" as catalogueInvariant1
 
         AGGREGATE_ROOT_ENTITY(Loan) #Cyan {
             status: Enum
@@ -129,31 +128,91 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
               end note
     }
 
-'    Package "Branches Sub-Domain" <<Rectangle>> #DFBDF4 {
-'        AGGREGATE_ROOT(Branch) #Cyan {
-'            name: String
-'            }
-'
-'        VALUE_OBJECT(BranchIdentifier) #Bisque{
-'            branchId: UUID
-'        }
-'
-'        VALUE_OBJECT(BranchAddress) #Bisque{
-'            streetAddress: String
-'            city: String
-'            province: String
-'            country: String
-'            postalCode: String
-'        }
-'
-'        Branch --> BranchIdentifier
-'        Branch --> BranchAddress
-'
-'    }
+Package "Human Resources Sub-Domain" <<Rectangle>> {
+        ENTITY(Employee) #lightblue{
+            firstName: String
+            lastName: String
+            email: String
+            salary: Decimal
+            commissionRate: Decimal
+        }
+        VALUE_OBJECT(EmployeeIdentifier) #Bisque{
+            salesPersonId: UUID
+        }
+        VALUE_OBJECT(EmployeeAddress) #Bisque{
+                street: String
+                city: String
+                province: String
+                country: String
+        }
+        VALUE_OBJECT(EmployeePhoneNumber) #Bisque {
+            type: String
+            number: String
+        }
+
+        ENTITY(Department) #lightblue {
+            departmentName: String
+            headCount: Integer
+        }
+
+        VALUE_OBJECT(DepartmentIdentifier) #Bisque {
+            departmentCode: UUID
+        }
+
+        VALUE_OBJECT(Position) #Bisque {
+            title: String
+            positionCode: String
+        }
 
 
 
+        Employee --> EmployeeIdentifier
 
+        Employee o--> Position
+        Employee "1" o--> "1..*" EmployeePhoneNumber
+        Employee o--> "1" EmployeeAddress
+        Employee "1" o--> "1" DepartmentIdentifier
+        Department --> DepartmentIdentifier
+        Department "1" o--> "1..*" Position
+    }
+
+    Package "Branches Sub-Domain" <<Rectangle>> {
+        AGGREGATE_ROOT(Branch) #Cyan {
+            name: String
+            }
+
+        VALUE_OBJECT(BranchIdentifier) #Bisque{
+            branchId: UUID
+        }
+
+        VALUE_OBJECT(BranchAddress) #Bisque{
+            streetAddress: String
+            city: String
+            province: String
+            country: String
+            postalCode: String
+        }
+
+        Branch --> BranchIdentifier
+        Branch --> BranchAddress
+        Branch --> CatalogIdentifier
+        Branch --> "*" EmployeeIdentifier
+
+    }
+
+    Package "Reservations Sub-Domain" <<Rectangle>> {
+        ENTITY(Reservation) #lightblue {
+            name: String
+            }
+
+        VALUE_OBJECT(ReservationIdentifier) #Bisque{
+            reservationId: UUID
+        }
+
+        Reservation --> ReservationIdentifier
+        ReservationIdentifier "0..*" --> Book
+
+    }
 
 }
 
