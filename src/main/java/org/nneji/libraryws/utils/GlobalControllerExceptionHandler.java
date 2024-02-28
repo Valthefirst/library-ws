@@ -1,5 +1,7 @@
 package org.nneji.libraryws.utils;
 
+import org.nneji.libraryws.utils.exceptions.DuplicateISBNException;
+import org.nneji.libraryws.utils.exceptions.InUseException;
 import org.nneji.libraryws.utils.exceptions.InvalidInputException;
 import org.nneji.libraryws.utils.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,18 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ExceptionHandler(InvalidInputException.class)
     public HttpErrorInfo handleInvalidInputException(WebRequest request, Exception ex) {
+        return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
+    }
+
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(InUseException.class)
+    public HttpErrorInfo handleInUseException(WebRequest request, Exception ex) {
+        return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
+    }
+
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(DuplicateISBNException.class)
+    public HttpErrorInfo handleDuplicateVinException(WebRequest request, Exception ex) {
         return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
     }
 

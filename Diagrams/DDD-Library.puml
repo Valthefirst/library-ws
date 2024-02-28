@@ -35,6 +35,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
         VALUE_OBJECT(PatronPhoneNumber) #Bisque {
             type: String
+            size: Integer
             number: String
         }
 
@@ -49,12 +50,14 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
     }
 
     Package "Catalog Sub-Domain" <<Rectangle>> #DFBDF4 {
-        AGGREGATE_ROOT(Catalogue) #Cyan {
+
+        AGGREGATE_ROOT(Catalog) #Cyan {
             type: String
+            size: Integer
         }
 
-       VALUE_OBJECT(CatalogueIdentifier) #Bisque{
-            catalogueId: UUID
+       VALUE_OBJECT(CatalogIdentifier) #Bisque{
+            catalogId: UUID
        }
         ENTITY(Book) #lightblue{
             title: String
@@ -62,6 +65,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
             edition: String
             publisher: String
             synopsis: String
+            language: String
             status: Enum
             }
 
@@ -76,8 +80,8 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
         Book --> ISBN
         Book o--> "1..*" Author
-        Catalogue --> CatalogueIdentifier
-        Catalogue *-- "0..*" ISBN
+        Catalog --> CatalogIdentifier
+        Catalog *-- "0..*" ISBN
         note on link
         where book.status != BORROWED
         end note
@@ -98,6 +102,10 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
     }
 
     Package "Loans Sub-Domain" <<Rectangle>> #DFBDF4 {
+
+       note "Invariant: [When a book is borrowed i.e. book.status is set to BORROWED]" as catalogueInvariant1
+
+
         AGGREGATE_ROOT_ENTITY(Loan) #Cyan {
             status: Enum
             borrowedDate: LocalDateTime

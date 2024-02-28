@@ -24,7 +24,9 @@ values ('cc9c2c7f-afc9-46fb-8119-17158e54d02f', 'Pen', 'Carruthers', 'pcarruther
 insert into patron_phonenumbers(patron_id, type, number) values(1, 'HOME', '515-555-5555');
 insert into patron_phonenumbers(patron_id, type, number) values(1, 'MOBILE', '514-555-4444');
 
-insert into books(isbn, catalogue_id, title, collection, edition, publisher, synopsis, first_name, last_name)
-values('978-1-56619-909-4', 'd846a5a7-2e1c-4c79-809c-4f3f471e826d', 'The Great Gatsby', 'F. Scott Fitzgerald', '', 'Scribner', 'The Great Gatsby is a novel written by American author F. Scott Fitzgerald that follows a cast of characters living in the fictional towns of West Egg and East Egg on prosperous Long Island in the summer of 1922. The story primarily concerns the young and mysterious millionaire Jay Gatsby and his quixotic passion and obsession with the beautiful former debutante Daisy Buchanan.', 'F. Scott', 'Fitzgerald');
+insert into books(isbn, catalog_id, title, collection, edition, publisher, synopsis, language, status, first_name, last_name)
+values('9781566199094', 'd846a5a7-2e1c-4c79-809c-4f3f471e826d', 'The Great Gatsby', 'F. Scott Fitzgerald', '', 'Scribner',
+       'The Great Gatsby is a novel written by American author F. Scott Fitzgerald that follows a cast of characters living in the fictional towns of West Egg and East Egg on prosperous Long Island in the summer of 1922. The story primarily concerns the young and mysterious millionaire Jay Gatsby and his quixotic passion and obsession with the beautiful former debutante Daisy Buchanan.',
+       'English', 'AVAILABLE', 'F. Scott', 'Fitzgerald');
 
-insert into catalogues (catalogue_id, type) values ('d846a5a7-2e1c-4c79-809c-4f3f471e826d', 'vehicles');
+insert into catalogs (catalog_id, type, size) values ('d846a5a7-2e1c-4c79-809c-4f3f471e826d', 'vehicles', 10);

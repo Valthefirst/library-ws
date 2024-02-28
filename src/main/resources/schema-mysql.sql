@@ -22,19 +22,22 @@ create table if not exists patrons (
 
 create table if not exists books (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    isbn VARCHAR(36),
-    catalogue_id VARCHAR(36),
+    isbn BIGINT UNIQUE,
+    catalog_id VARCHAR(36),
     title VARCHAR(255),
     collection VARCHAR(255),
     edition VARCHAR(255),
     publisher VARCHAR(255),
     synopsis VARCHAR(500),
-    first_name VARCHAR(36),
-    last_name VARCHAR(36)
+    language VARCHAR(50),
+    status VARCHAR(50),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
     );
 
-create table if not exists catalogues (
+create table if not exists catalogs (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    catalogue_id VARCHAR(36),
-    type VARCHAR(100)
+    catalog_id VARCHAR(36),
+    type VARCHAR(50),
+    size INTEGER
     );
