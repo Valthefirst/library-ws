@@ -1,6 +1,5 @@
 package org.nneji.libraryws.catalogsubdomain.presentationlayer.catalogbooks;
 
-import org.nneji.libraryws.catalogsubdomain.businesslayer.books.BookService;
 import org.nneji.libraryws.catalogsubdomain.businesslayer.catalogbooks.CatalogBooksService;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.books.BookRequestModel;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.books.BookResponseModel;

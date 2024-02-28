@@ -46,7 +46,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         Patron --> PatronIdentifier
         Patron o--> "0..*" PatronPhoneNumber
         Patron o--> "1" PatronAddress
-        Patron o--> "1..*" Loans
+        Patron o--> "0..*" Loans
     }
 
     Package "Catalog Sub-Domain" <<Rectangle>> #DFBDF4 {
@@ -91,6 +91,8 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         ENTITY(Fine) #lightblue {
             amount: Double
             status: Enum
+            reason: String
+            isPaid: Boolean
             }
 
         VALUE_OBJECT(FineIdentifier) #Bisque{
@@ -98,7 +100,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         }
 
         Fine --> FineIdentifier
-        Fine --> PatronIdentifier
+'        Fine --> PatronIdentifier
     }
 
     Package "Loans Sub-Domain" <<Rectangle>> #DFBDF4 {
@@ -108,8 +110,8 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
         AGGREGATE_ROOT_ENTITY(Loan) #Cyan {
             status: Enum
-            borrowedDate: LocalDateTime
-            dueDate: LocalDateTime
+            borrowedDate: LocalDate
+            dueDate: LocalDate
             books: List[BookIdentifier]
             }
 
@@ -121,6 +123,10 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         Loan --> PatronIdentifier
         Loan --> ISBN
         Loan --> FineIdentifier
+        LoanIdentifier "0..*" --* Loans
+              note on link
+                where patronId == loan.patronId
+              end note
     }
 
 '    Package "Branches Sub-Domain" <<Rectangle>> #DFBDF4 {

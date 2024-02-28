@@ -28,7 +28,7 @@ create table if not exists books (
     collection VARCHAR(255),
     edition VARCHAR(255),
     publisher VARCHAR(255),
-    synopsis VARCHAR(500),
+    synopsis VARCHAR(550),
     language VARCHAR(50),
     status VARCHAR(50),
     first_name VARCHAR(50),
@@ -40,4 +40,12 @@ create table if not exists catalogs (
     catalog_id VARCHAR(36),
     type VARCHAR(50),
     size INTEGER
+    );
+
+create table if not exists fines (
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fine_id VARCHAR(36),
+    amount DECIMAL(19,2),
+    reason VARCHAR(50),
+    is_paid VARCHAR(36)
     );

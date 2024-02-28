@@ -7,7 +7,7 @@ import org.nneji.libraryws.catalogsubdomain.datalayer.catalog.CatalogIdentifier;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.catalog.CatalogRequestModel;
 
 @Mapper(componentModel = "spring")
-public interface CatalogueRequestMapper {
+public interface CatalogRequestMapper {
 
     @Mapping(target = "id", ignore = true)
     Catalog requestModelToEntity(CatalogRequestModel requestModel, CatalogIdentifier catalogIdentifier);

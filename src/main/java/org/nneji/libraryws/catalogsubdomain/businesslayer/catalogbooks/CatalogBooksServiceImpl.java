@@ -8,8 +8,8 @@ import org.nneji.libraryws.catalogsubdomain.datalayer.catalog.CatalogIdentifier;
 import org.nneji.libraryws.catalogsubdomain.datalayer.catalog.CatalogRepository;
 import org.nneji.libraryws.catalogsubdomain.datamapperlayer.book.BookRequestMapper;
 import org.nneji.libraryws.catalogsubdomain.datamapperlayer.book.BookResponseMapper;
+import org.nneji.libraryws.catalogsubdomain.datamapperlayer.catalog.CatalogRequestMapper;
 import org.nneji.libraryws.catalogsubdomain.datamapperlayer.catalog.CatalogResponseMapper;
-import org.nneji.libraryws.catalogsubdomain.datamapperlayer.catalog.CatalogueRequestMapper;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.books.BookRequestModel;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.books.BookResponseModel;
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.catalog.CatalogRequestModel;
@@ -29,15 +29,15 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
     private final CatalogRepository catalogRepository;
     private final BookRepository bookRepository;
     private final CatalogResponseMapper catalogResponseMapper;
-    private final CatalogueRequestMapper catalogueRequestMapper;
+    private final CatalogRequestMapper catalogRequestMapper;
     private final BookResponseMapper bookResponseMapper;
     private final BookRequestMapper bookRequestMapper;
 
-    public CatalogBooksServiceImpl(CatalogRepository catalogRepository, BookRepository bookRepository, CatalogResponseMapper catalogResponseMapper, CatalogueRequestMapper catalogueRequestMapper, BookResponseMapper bookResponseMapper, BookRequestMapper bookRequestMapper) {
+    public CatalogBooksServiceImpl(CatalogRepository catalogRepository, BookRepository bookRepository, CatalogResponseMapper catalogResponseMapper, CatalogRequestMapper catalogRequestMapper, BookResponseMapper bookResponseMapper, BookRequestMapper bookRequestMapper) {
         this.catalogRepository = catalogRepository;
         this.bookRepository = bookRepository;
         this.catalogResponseMapper = catalogResponseMapper;
-        this.catalogueRequestMapper = catalogueRequestMapper;
+        this.catalogRequestMapper = catalogRequestMapper;
         this.bookResponseMapper = bookResponseMapper;
         this.bookRequestMapper = bookRequestMapper;
     }
@@ -60,7 +60,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
     @Override
     public CatalogResponseModel addCatalog(CatalogRequestModel catalogRequestModel) {
         return catalogResponseMapper.entityToResponseModel(catalogRepository
-                .save(catalogueRequestMapper.requestModelToEntity(catalogRequestModel, new CatalogIdentifier())));
+                .save(catalogRequestMapper.requestModelToEntity(catalogRequestModel, new CatalogIdentifier())));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (existingCatalog == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
-        Catalog updatedCatalog = catalogueRequestMapper.requestModelToEntity(catalogRequestModel, existingCatalog.getCatalogIdentifier());
+        Catalog updatedCatalog = catalogRequestMapper.requestModelToEntity(catalogRequestModel, existingCatalog.getCatalogIdentifier());
         updatedCatalog.setId(existingCatalog.getId());
         return catalogResponseMapper.entityToResponseModel(catalogRepository.save(updatedCatalog));
     }
