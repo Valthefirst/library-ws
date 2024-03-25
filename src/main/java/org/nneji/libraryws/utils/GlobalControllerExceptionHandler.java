@@ -1,9 +1,6 @@
 package org.nneji.libraryws.utils;
 
-import org.nneji.libraryws.utils.exceptions.DuplicateISBNException;
-import org.nneji.libraryws.utils.exceptions.InUseException;
-import org.nneji.libraryws.utils.exceptions.InvalidInputException;
-import org.nneji.libraryws.utils.exceptions.NotFoundException;
+import org.nneji.libraryws.utils.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,6 +37,12 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ExceptionHandler(DuplicateISBNException.class)
     public HttpErrorInfo handleDuplicateVinException(WebRequest request, Exception ex) {
+        return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
+    }
+
+    @ResponseStatus(UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(UnavailableBookException.class)
+    public HttpErrorInfo handleUnavailableBookException(WebRequest request, Exception ex) {
         return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
     }
 

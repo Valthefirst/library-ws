@@ -12,6 +12,8 @@ import org.nneji.libraryws.patronsaccountssubdomain.datalayer.PatronIdentifier;
 public interface LoanRequestMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "borrowedDate", ignore = true)
+    @Mapping(target = "returnedDate", ignore = true)
 //    @Mapping(target = "loanId", source = "loanId")
 //    @Mapping(expression = "java(patronIdentifier)", target = "patronIdentifier")
     Loan requestModelToEntity(LoanRequestModel requestModel, LoanIdentifier loanIdentifier,

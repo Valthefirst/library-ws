@@ -89,7 +89,7 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
     Package "Fines Sub-Domain" <<Rectangle>> #DFBDF4 {
         ENTITY(Fine) #lightblue {
-            amount: Double
+            amount: BigDecimal
             status: Enum
             reason: String
             isPaid: Boolean

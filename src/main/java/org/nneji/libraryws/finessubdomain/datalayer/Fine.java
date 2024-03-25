@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.nneji.libraryws.patronsaccountssubdomain.datalayer.PatronIdentifier;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "fines")
 @Data
@@ -17,11 +19,11 @@ public class Fine {
 
     @Embedded
     private FineIdentifier fineIdentifier;
-    private Double amount;
+    private BigDecimal amount;
     private String reason;
     private Boolean isPaid;
 
-    public Fine(@NotNull Double amount, @NotNull String reason, @NotNull Boolean isPaid) {
+    public Fine(@NotNull BigDecimal amount, @NotNull String reason, @NotNull Boolean isPaid) {
         this.fineIdentifier = new FineIdentifier();
         this.amount = amount;
         this.reason = reason;

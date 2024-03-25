@@ -1,4 +1,4 @@
-package org.nneji.libraryws.catalogsubdomain.businesslayer.catalogbooks;
+package org.nneji.libraryws.catalogsubdomain.businesslayer;
 
 import org.nneji.libraryws.catalogsubdomain.datalayer.books.Book;
 import org.nneji.libraryws.catalogsubdomain.datalayer.books.BookRepository;
