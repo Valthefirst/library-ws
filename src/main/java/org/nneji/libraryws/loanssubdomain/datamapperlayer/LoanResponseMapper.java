@@ -4,12 +4,10 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.nneji.libraryws.catalogsubdomain.datalayer.books.Book;
-import org.nneji.libraryws.catalogsubdomain.presentationlayer.books.BookResponseModel;
-import org.nneji.libraryws.catalogsubdomain.presentationlayer.catalogbooks.CatalogBooksController;
 import org.nneji.libraryws.loanssubdomain.datalayer.Loan;
 import org.nneji.libraryws.loanssubdomain.presentationlayer.LoanResponseModel;
 import org.nneji.libraryws.loanssubdomain.presentationlayer.PatronLoansController;
+import org.nneji.libraryws.patronsaccountssubdomain.datalayer.PatronRepository;
 import org.springframework.hateoas.Link;
 
 import java.util.List;
@@ -20,9 +18,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Mapper(componentModel = "spring")
 public interface LoanResponseMapper {
 
+//    PatronRepository patronRepository;
+
     @Mapping(expression = "java(loan.getLoanIdentifier().getLoanId())", target = "loanId")
     @Mapping(expression = "java(loan.getPatronIdentifier().getPatronId())", target = "patronId")
-    @Mapping(expression = "java(loan.getFineIdentifier().getFineId())", target = "fineId")
+    @Mapping(expression = "java(loan.getFineIdentifier() != null ? loan.getFineIdentifier().getFineId() : null)",
+            target = "fineId")
+//    @Mapping(expression = "java(patronRepository.findByPatronIdentifier_PatronId(loan.getPatronIdentifier().getPatronId()).getFirstName())", target = "patronFirstName")
+//    @Mapping(expression = "java(patronRepository.findByPatronIdentifier_PatronId(loan.getPatronIdentifier().getPatronId()).getLastName())", target = "patronLastName")
     LoanResponseModel entityToResponseModel(Loan loan);
 
     List<LoanResponseModel> entityListToResponseModelList(List<Loan> books);

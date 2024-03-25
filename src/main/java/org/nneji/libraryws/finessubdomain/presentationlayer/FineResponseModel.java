@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import org.springframework.hateoas.RepresentationModel;
 public class FineResponseModel extends RepresentationModel<FineResponseModel> {
 
     private String fineId;
-    private Double amount;
+    private BigDecimal amount;
     private String reason;
     private Boolean isPaid;
 //    private String patronId;

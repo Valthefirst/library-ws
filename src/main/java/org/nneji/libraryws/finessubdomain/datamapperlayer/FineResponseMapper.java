@@ -18,7 +18,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Mapper(componentModel = "spring")
 public interface FineResponseMapper {
 
-    @Mapping(expression = "java(fine.getFineIdentifier().getFineId())", target = "fineId")
+    @Mapping(expression = "java(fine.getFineIdentifier() != null ? fine.getFineIdentifier().getFineId() : null)",
+            target = "fineId")
 //    @Mapping(expression = "java(patron.getPatronIdentifier().getPatronId())", target = "patronId")
     FineResponseModel entityToResponseModel(Fine fine);
 

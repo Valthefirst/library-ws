@@ -1,4 +1,4 @@
-package org.nneji.libraryws.catalogsubdomain.businesslayer.catalogbooks;
+package org.nneji.libraryws.catalogsubdomain.businesslayer;
 
 import org.nneji.libraryws.catalogsubdomain.datalayer.books.Book;
 import org.nneji.libraryws.catalogsubdomain.datalayer.books.BookRepository;
@@ -162,6 +162,11 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (existingBook == null) {
             throw new NotFoundException("Unknown customerId: " + isbn);
         }
+
+        // To decrement the number of books in the catalogue
+        Catalog catalog = catalogRepository.findByCatalogIdentifier_CatalogId(catalogId);
+        catalog.setSize(catalog.getSize() - 1);
+
         bookRepository.delete(existingBook);
     }
 }
