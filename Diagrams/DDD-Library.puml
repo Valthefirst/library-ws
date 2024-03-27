@@ -2,6 +2,8 @@
 hide circle
 top to bottom direction
 !define ENTITY(entityName) class entityName << Entity >>
+!define AGGREGATE(aggregateName) class aggregateName << Aggregate >>
+!define AGGREGATE_ENTITY(aggregateEntityName) class aggregateEntityName << Aggregate Entity >>
 !define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
 !define AGGREGATE_ROOT_ENTITY(aggregateRootEntityName) class aggregateRootEntityName << Aggregate Root >> << Entity >>
 !define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
@@ -15,7 +17,7 @@ skinparam rectangle {
 rectangle "Library" as BoundedContextLibrary #line.dashed {
     Package "Patrons Accounts Sub-Domain" <<Rectangle>> #DFBDF4 {
 
-        ENTITY(Patron) #lightblue{
+        AGGREGATE_ROOT_ENTITY(Patron) #Cyan{
             firstName: String
             lastName: String
             contactMethodPreference: Enum
@@ -44,14 +46,14 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         }
 
         Patron --> PatronIdentifier
-        Patron o--> "0..*" PatronPhoneNumber
-        Patron o--> "1" PatronAddress
-        Patron o--> "0..*" Loans
+        Patron o-- "0..*" PatronPhoneNumber
+        Patron o-- "1" PatronAddress
+        Patron o-- "0..*" Loans
     }
 
     Package "Catalog Sub-Domain" <<Rectangle>> #DFBDF4 {
 
-        AGGREGATE_ROOT(Catalog) #Cyan {
+        AGGREGATE_ROOT_ENTITY(Catalog) #Cyan {
             type: String
             size: Integer
         }
@@ -79,12 +81,12 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         }
 
         Book --> ISBN
-        Book o--> "1..*" Author
+        Book o-- "1..*" Author
         Catalog --> CatalogIdentifier
         Catalog *-- "0..*" ISBN
-        note on link
-        where book.status != BORROWED
-        end note
+'        note on link
+'        where book.status != BORROWED
+'        end note
     }
 
     Package "Fines Sub-Domain" <<Rectangle>> #DFBDF4 {
@@ -105,13 +107,13 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
 
     Package "Loans Sub-Domain" <<Rectangle>> #DFBDF4 {
 
-       note "Invariant: [When a book is added to the catalog i.e. catalog.size is set to increased by 1]" as catalogueInvariant1
+       note "Invariant: [When a book is borrowed i.e. loan.status is set to status.ACTIVE, the book's status in the catalogue must be set to BORROWED]" as catalogueInvariant1
 
-        AGGREGATE_ROOT_ENTITY(Loan) #Cyan {
+        AGGREGATE_ENTITY(Loan) #Cyan {
             status: Enum
-            borrowedDate: LocalDate
+            loanDate: LocalDate
             dueDate: LocalDate
-            books: List[BookIdentifier]
+            books: List[ISBN]
             }
 
         VALUE_OBJECT(LoanIdentifier) #Bisque{
@@ -119,13 +121,13 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         }
 
         Loan --> LoanIdentifier
-        Loan --> PatronIdentifier
-        Loan --> ISBN
+        Loan -u-> PatronIdentifier
+        Loan o-- "1..*" ISBN
         Loan --> FineIdentifier
         LoanIdentifier "0..*" --* Loans
-              note on link
-                where patronId == loan.patronId
-              end note
+'              note on link
+'                where patronId == loan.patronId
+'              end note
     }
 
 Package "Human Resources Sub-Domain" <<Rectangle>> {
@@ -168,12 +170,12 @@ Package "Human Resources Sub-Domain" <<Rectangle>> {
 
         Employee --> EmployeeIdentifier
 
-        Employee o--> Position
-        Employee "1" o--> "1..*" EmployeePhoneNumber
-        Employee o--> "1" EmployeeAddress
+        Employee o-- Position
+        Employee "1" o-- "1..*" EmployeePhoneNumber
+        Employee o-- "1" EmployeeAddress
         Employee "1" o--> "1" DepartmentIdentifier
         Department --> DepartmentIdentifier
-        Department "1" o--> "1..*" Position
+        Department "1" o-- "1..*" Position
     }
 
     Package "Branches Sub-Domain" <<Rectangle>> {
@@ -194,9 +196,9 @@ Package "Human Resources Sub-Domain" <<Rectangle>> {
         }
 
         Branch --> BranchIdentifier
-        Branch --> BranchAddress
+        Branch o-- "1" BranchAddress
         Branch --> CatalogIdentifier
-        Branch --> "*" EmployeeIdentifier
+        Branch --> "1..*" EmployeeIdentifier
 
     }
 
