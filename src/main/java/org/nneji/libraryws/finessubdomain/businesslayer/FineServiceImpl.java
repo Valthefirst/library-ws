@@ -35,7 +35,6 @@ public class FineServiceImpl implements FineService{
         Fine fine = fineRepository.findByFineIdentifier_FineId(fineId);
         if (fine == null)
             throw new NotFoundException("Unknown fineId: " + fineId);
-//        fine.getFineId().setFineId(fineId);
         return fineResponseMapper.entityToResponseModel(fine);
     }
 
