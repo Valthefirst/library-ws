@@ -84,9 +84,6 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         Book o-- "1..*" Author
         Catalog --> CatalogIdentifier
         Catalog *-- "0..*" ISBN
-'        note on link
-'        where book.status != BORROWED
-'        end note
     }
 
     Package "Fines Sub-Domain" <<Rectangle>> #DFBDF4 {
@@ -125,9 +122,6 @@ rectangle "Library" as BoundedContextLibrary #line.dashed {
         Loan o-- "1..*" ISBN
         Loan --> FineIdentifier
         LoanIdentifier "0..*" --* Loans
-'              note on link
-'                where patronId == loan.patronId
-'              end note
     }
 
 Package "Human Resources Sub-Domain" <<Rectangle>> {

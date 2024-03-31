@@ -16,7 +16,7 @@ import org.nneji.libraryws.catalogsubdomain.presentationlayer.catalog.CatalogReq
 import org.nneji.libraryws.catalogsubdomain.presentationlayer.catalog.CatalogResponseModel;
 import org.nneji.libraryws.utils.exceptions.DuplicateISBNException;
 import org.nneji.libraryws.utils.exceptions.InUseException;
-import org.nneji.libraryws.utils.exceptions.InvalidInputException;
+import org.nneji.libraryws.utils.exceptions.InvalidISBNException;
 import org.nneji.libraryws.utils.exceptions.NotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -104,6 +104,10 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
+        if (isbn != 10 && isbn != 13) {
+            throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
+        }
+
         Book book = bookRepository.findByIsbn_Isbn(isbn);
         if (book == null) {
             throw new NotFoundException("Unknown ISBN provided: " + isbn);
@@ -115,6 +119,10 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
     public BookResponseModel addBookInCatalog(String catalogId, BookRequestModel bookRequestModel) {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
+
+        if (bookRequestModel.getIsbn() != 10 && bookRequestModel.getIsbn() != 13) {
+            throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
+        }
 
         Book book = bookRequestMapper.requestModelToEntity(bookRequestModel, new ISBN(bookRequestModel.getIsbn()),
                 new CatalogIdentifier(catalogId));
@@ -130,7 +138,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
             if(e.getMessage().contains("constraint [isbn]")) {
                 throw new DuplicateISBNException("The catalog already contains a book with isbn: " + bookRequestModel.getIsbn());
             }
-            throw new InvalidInputException("Could not save the new book.");
+            throw new InvalidISBNException("Could not save the new book.");
         }
     }
 
@@ -139,9 +147,13 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
+        if (isbn != 10 && isbn != 13) {
+            throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
+        }
+
         Book existingBook = bookRepository.findByIsbn_Isbn(isbn);
         if (existingBook == null) {
-            throw new NotFoundException("Unknown customerId: " + isbn);
+            throw new NotFoundException("Unknown ISBN: " + isbn);
         }
 
         Book updatedBook = bookRequestMapper.requestModelToEntity(bookRequestModel, existingBook.getIsbn(),
@@ -157,10 +169,14 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
+        if (isbn != 10 && isbn != 13) {
+            throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
+        }
+
         Book existingBook = bookRepository.findByIsbn_Isbn(isbn);
 
         if (existingBook == null) {
-            throw new NotFoundException("Unknown customerId: " + isbn);
+            throw new NotFoundException("Unknown ISBN: " + isbn);
         }
 
         // To decrement the number of books in the catalogue

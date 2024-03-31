@@ -14,5 +14,5 @@ public class FineRequestModel {
     private BigDecimal amount;
     private String reason;
     private Boolean isPaid;
-    private String patronId;
+//    private String patronId;
 }
