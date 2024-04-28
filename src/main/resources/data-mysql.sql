@@ -35,7 +35,7 @@ INSERT INTO patron_phonenumbers (patron_id, type, number) VALUES
 
 
 insert into books(isbn, catalog_id, title, collection, edition, publisher, synopsis, language, status, first_name, last_name)
-values(9781566199094, 'd846a5a7-2e1c-4c79-809c-4f3f471e826d', 'The Great Gatsby', 'F. Scott Fitzgerald', '', 'Scribner',
+values(9789390183524, 'd846a5a7-2e1c-4c79-809c-4f3f471e826d', 'The Great Gatsby', 'F. Scott Fitzgerald', '', 'Scribner',
        'The Great Gatsby is a novel written by American author F. Scott Fitzgerald that follows a cast of characters living in the fictional towns of West Egg and East Egg on prosperous Long Island in the summer of 1922. The story primarily concerns the young and mysterious millionaire Jay Gatsby and his quixotic passion and obsession with the beautiful former debutante Daisy Buchanan.',
        'English', 'DAMAGED', 'F. Scott', 'Fitzgerald');
 INSERT INTO books (isbn, catalog_id, title, collection, edition, publisher, synopsis, language, status, first_name, last_name)

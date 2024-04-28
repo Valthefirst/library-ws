@@ -36,7 +36,7 @@ public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(UNPROCESSABLE_ENTITY)
     @ExceptionHandler(DuplicateISBNException.class)
-    public HttpErrorInfo handleDuplicateVinException(WebRequest request, Exception ex) {
+    public HttpErrorInfo handleDuplicateISBNException(WebRequest request, Exception ex) {
         return createHttpErrorInfo(UNPROCESSABLE_ENTITY, request, ex);
     }
 
