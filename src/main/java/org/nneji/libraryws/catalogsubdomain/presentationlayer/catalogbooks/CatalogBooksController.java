@@ -70,8 +70,7 @@ public class CatalogBooksController {
     @PutMapping(consumes = "application/json", value = "{catalogId}/books/{isbn}", produces = "application/json")
     public ResponseEntity<BookResponseModel> updateBook(@RequestBody BookRequestModel bookRequestModel,
                                                         @PathVariable Long isbn, @PathVariable String catalogId) {
-        BookResponseModel updatedMovie = catalogBooksService.updateBookInCatalog(catalogId, isbn, bookRequestModel);
-        return ResponseEntity.ok().body(updatedMovie);
+        return ResponseEntity.ok().body(catalogBooksService.updateBookInCatalog(catalogId, isbn, bookRequestModel));
     }
 
     @DeleteMapping("{catalogId}/books/{isbn}")

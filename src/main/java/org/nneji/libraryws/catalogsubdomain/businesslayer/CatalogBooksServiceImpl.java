@@ -104,10 +104,9 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
-        if (isbn != 10 && isbn != 13) {
+        if (isbn.toString().length() != 10 && isbn.toString().length() != 13) {
             throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
         }
-
         Book book = bookRepository.findByIsbn_Isbn(isbn);
         if (book == null) {
             throw new NotFoundException("Unknown ISBN provided: " + isbn);
@@ -120,7 +119,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
-        if (bookRequestModel.getIsbn() != 10 && bookRequestModel.getIsbn() != 13) {
+        if (bookRequestModel.getIsbn().toString().length() != 10 && bookRequestModel.getIsbn().toString().length() != 13) {
             throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
         }
 
@@ -147,7 +146,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
-        if (isbn != 10 && isbn != 13) {
+        if (isbn.toString().length() != 10 && isbn.toString().length() != 13) {
             throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
         }
 
@@ -169,7 +168,7 @@ public class CatalogBooksServiceImpl implements CatalogBooksService {
         if (catalogRepository.findByCatalogIdentifier_CatalogId(catalogId) == null)
             throw new NotFoundException("Unknown catalogId provided: " + catalogId);
 
-        if (isbn != 10 && isbn != 13) {
+        if (isbn.toString().length() != 10 && isbn.toString().length() != 13) {
             throw new InvalidISBNException("ISBN must be 10 or 13 digits long.");
         }
 
